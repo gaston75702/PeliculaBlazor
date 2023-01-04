@@ -1,0 +1,20 @@
+﻿@page "/generos/crear"
+@inject NavigationManager navigationManager
+
+<h3>Crear Genero</h3>
+
+<FormularioGenero @ref="formularioGenero" Genero="Genero" onValidSubmit="Crear" />
+
+@code {
+    private Genero Genero = new Genero();
+
+    private FormularioGenero? formularioGenero;
+
+    private void Crear()
+    {
+        formularioGenero!.FormularioPosteadoConExito = true;
+        Console.WriteLine("Ejecutando metodo crear");
+        Console.WriteLine($"Nombre del genero:{Genero.Nombre}");
+        navigationManager.NavigateTo("generos");
+    }
+}

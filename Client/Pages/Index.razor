@@ -1,0 +1,39 @@
+﻿
+@page "/"
+@using PeliculaBlazor.Client.Shared
+@inject IRepositorio repositorio
+
+    <div>
+        <h3>Pelicula</h3>
+        <ListadoPeliculas  Peliculas="Peliculas"/>
+
+
+
+    </div>
+    
+    <div>
+        <h2>Registrar Pelicula</h2>
+        <EjemploTextbox placeholder="Nombre Pelicula" />
+    </div>
+
+@code
+{
+
+    public List<Pelicula> Peliculas;
+
+    public Index(List<Pelicula> peliculas)
+    {
+        Peliculas = peliculas;
+    }
+
+    protected override void OnInitialized()
+    {
+        
+        Peliculas = repositorio.ObtenerPeliculas();
+
+    }
+}
+
+
+
+
