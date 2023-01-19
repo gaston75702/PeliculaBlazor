@@ -9,17 +9,17 @@
 <h3>Filtro Peliculas</h3>
 
 <div class="row g-3 align-items-center mb-3">
-    
+
     <div class="col-sm-3">
         <input type="text" class="form-control" id="titulo" placeholder="Titulo Pelicula"
-        @bind-value="titulo" @bind-value:event="oninput"
-        onkeypress="@((KeyboardEventArgs e)=> TituloKeyPress(e))" />
+               @bind-value="titulo" @bind-value:event="oninput"
+               onkeypress="@((KeyboardEventArgs e)=> TituloKeyPress(e))" />
 
     </div>
     <div class="col-sm-3">
         <select class="form-select" @bind="generoSeleccionado">
             <option value="0">-- Seleccione un genero --</option>
-            @foreach(var item in generos)
+            @foreach (var item in generos)
             {
                 <option value="@item.Id">@item.Nombre</option>
             }
@@ -29,7 +29,7 @@
 
     <div class="col-sm-6" style="display: flex;">
         <div class="form-check me-2">
-            <input type="checkbox" class="form-check-input" id="estrenos" @bind="futurosEstrenos"/>
+            <input type="checkbox" class="form-check-input" id="estrenos" @bind="futurosEstrenos" />
             <label class="form-check-label" for="estrenos">Futuros Estrenos</label>
         </div>
         <div class="form-check me-2">
@@ -42,11 +42,11 @@
         </div>
 
     </div>
-    
+
     <div class="col-12">
 
         <button type="button" class="btn btn-primary" @onclick="CargarNuevasPeliculas">Filtrar</button>
-        <button type="button" class="btn btn-danger" @onclick="LimpiarOnClick">Limpiarr</button>
+        <button type="button" class="btn btn-danger" @onclick="LimpiarOnClick">Limpiar</button>
 
     </div>
 
@@ -88,7 +88,7 @@
         Console.WriteLine($"masVotadas: {masVotadas}");
     }
 
-    private void LimpiarOnCLick()
+    private void LimpiarOnClick()
     {
         Peliculas = repositorio.ObtenerPeliculas();
         titulo = "";

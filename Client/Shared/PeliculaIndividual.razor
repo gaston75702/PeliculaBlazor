@@ -16,7 +16,7 @@
 
 @code
 {
-    [Parameter] public Pelicula Pelicula { get; set; }
+    [Parameter] public Pelicula Pelicula { get; set; } = null!;
     [Parameter] public bool MostrarBotones { get; set; } = false;
     [Parameter] public EventCallback<Pelicula> EliminarPelicula { get; set; }
     private string urlPelicula = string.Empty;
