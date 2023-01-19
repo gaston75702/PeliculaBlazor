@@ -1,6 +1,5 @@
-﻿@using PeliculaBlazor.Client.Helpers;
-@using PeliculaBlazor.Shared.Entidades;
-@inject IJSRuntime js
+﻿@inject SweetAlertService swal
+
 
 <NavigationLock OnBeforeInternalNavigation="OnBeforeInternalNavigation"></NavigationLock>
 
@@ -48,8 +47,16 @@
             return;
         }
 
-        var confirmado = await js.Confirm("¿Deseas abandonar la pagina y perder los cambios?");
+        var resultado = await swal.FireAsync(new SweetAlertOptions
+            {
+                Title = "Confirmacion",
+                Text = "¿Deseas abandonar la pagina y perder los cambios?",
+                Icon = SweetAlertIcon.Warning,
+                ShowCancelButton=true
+            });
 
+        var confirmado = !string.IsNullOrEmpty(resultado.Value);
+        
         if (confirmado)
         {
             return;

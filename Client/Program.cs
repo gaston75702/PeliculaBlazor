@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using CurrieTechnologies.Razor.SweetAlert2;
 
 namespace PeliculaBlazor.Client
 {
@@ -26,6 +27,7 @@ namespace PeliculaBlazor.Client
         private static void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddSweetAlert2();
             services.AddSingleton<IRepositorio, Repositorio>();
 
         }

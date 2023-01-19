@@ -1,13 +1,13 @@
 ﻿@inject IJSRuntime js
 
-    
+
 <div style="display: flex; flex-wrap: wrap; align-items: center;">
-   
-   <ListadoGenerico Listado="Peliculas">
+
+    <ListadoGenerico Listado="Peliculas">
         <HayRegistros Context="pelicula">
             <PeliculaIndividual Pelicula="pelicula" EliminarPelicula="@EliminarPelicula" />
         </HayRegistros>
-   </ListadoGenerico>
+    </ListadoGenerico>
 
 
 </div>
@@ -22,15 +22,16 @@
     bool MostrarBotones = true;
     async Task EliminarPelicula(Pelicula pelicula)
     {
-        
+
         var confirmar = await js.Confirm($"¿Desea borrar la pelicula {pelicula.Titulo}?");
         if (confirmar)
         {
-           Peliculas.Remove(pelicula);
-           Console.WriteLine($"Se ha eliminado una pelicula {pelicula.Titulo}");
+            Peliculas.Remove(pelicula);
+            Console.WriteLine($"Se ha eliminado una pelicula {pelicula.Titulo}");
         }
     }
 
- 
+
 }
 
+ 
