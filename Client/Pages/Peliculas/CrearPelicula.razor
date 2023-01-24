@@ -1,10 +1,26 @@
 ﻿@page "/peliculas/crear"
 @inject NavigationManager navigationManager
 
-<h3>CrearPelicula</h3>
-<button @onclick="Crear">Guardar</button>
+<h3>Crear Pelicula</h3>
+<FormularioPeliculas Pelicula="Pelicula" OnValidSubmit="Crear" GenerosNoSeleccionados="GenerosNoSeleccionados"
+    
+></FormularioPeliculas>
 
 @code {
+    private Pelicula Pelicula = new Pelicula();
+    private List<Genero> GenerosNoSeleccionados = new List<Genero>();
+
+    protected override void OnInitialized()
+    {
+        GenerosNoSeleccionados = new List<Genero>()
+        {
+            new Genero() { Id = 1, Nombre = "Comedia"},
+            new Genero() { Id = 2, Nombre = "Drama"  },
+            new Genero() { Id = 3, Nombre = "Accion" },
+            new Genero() { Id = 4, Nombre = "Sci-fi" }
+            
+        };
+    }
 
     void Crear()
     {

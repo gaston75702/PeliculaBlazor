@@ -23,7 +23,9 @@
     </div>
 
     <div class="mb-3 form-markdown">
-        <InputMarkdown @bind-Value="Actor.Biografia" For=@(() =>Actor.Biografia) Label="Biografia"/>
+        <InputMarkdown @bind-Value="Actor.Biografia" 
+        For=@(() =>Actor.Biografia) 
+            Label="Biografia"/>
     </div>
 
     <button class="btn btn-success">Guardar Cambios</button>
@@ -31,14 +33,6 @@
 </EditForm>
 
 @code {
-
-    [Parameter]
-    [EditorRequired]
-    public Actor Actor { get; set; } = null!;
-
-    [Parameter]
-    [EditorRequired]
-    public EventCallback OnValidSubmit { get; set; }
 
     string? imagenURL;
     protected override void OnInitialized()
@@ -55,5 +49,15 @@
         Actor.Foto = imagenBase64;
         imagenURL = null;
     }
+
+    [Parameter]
+    [EditorRequired]
+    public Actor Actor { get; set; } = null!;
+
+    [Parameter]
+    [EditorRequired]
+    public EventCallback OnValidSubmit { get; set; }
+
+   
 
 }
