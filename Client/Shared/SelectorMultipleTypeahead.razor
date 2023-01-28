@@ -1,0 +1,74 @@
+﻿@using Blazored.Typeahead
+@typeparam T
+
+<BlazoredTypeahead TValue="T" TItem="T" SearchMethod="SearchMethod" 
+    Value="sampleItem" ValueChanged="ElementoSeleccionado" ValueExpression="@(()=>sampleItem)">
+    
+    <ResultTemplate >
+        @MyResultTemplate(context)
+    </ResultTemplate>
+    <NotFoundTemplate>
+        Lo sentimos, no hubo registros encontrados.
+    </NotFoundTemplate>
+    <SelectedTemplate></SelectedTemplate>
+    
+
+</BlazoredTypeahead>
+
+<ul class="list-group">
+    @foreach (var item in ElementoSeleccionados)
+    {
+        <li draggable="true" @ondragstart="@(()=> HandleDragStart(item))"
+            @ondragover="@(()=>HandleDragOver(item))" class="list-group-item list-group-item-action">
+            @MyListTemplate(item)
+            <span
+                @onclick="@(()=> ElementoSeleccionados.Remove(item))"
+                class="badge bg-primary rounded-pill" style="cursor:pointer">   
+                X
+            </span>
+
+        </li>
+    }
+</ul>
+
+@code {
+    [Parameter, EditorRequired] public Func<string, Task<IEnumerable<T>>> SearchMethod { get; set; } = null!;
+    [Parameter] public List<T> ElementoSeleccionados { get; set; } = new List<T>();
+    [Parameter, EditorRequired] public RenderFragment<T> MyResultTemplate { get; set; } = null!;
+    [Parameter, EditorRequired] public RenderFragment<T> MyListTemplate { get; set; } = null!;
+
+    T? sampleItem = default(T);
+    T? itemArrastrado;
+
+    private void HandleDragStart(T item)
+    {
+        itemArrastrado = item;
+    }
+
+    private void HandleDragOver(T item)
+    {
+        if (itemArrastrado is null)
+        {
+            return;
+        }
+        if (!item.Equals(itemArrastrado))
+        {
+            var indiceElementoArrastrado = ElementoSeleccionados.IndexOf(itemArrastrado);
+            var indiceElemento = ElementoSeleccionados.IndexOf(item);
+            ElementoSeleccionados[indiceElemento] = itemArrastrado;
+            ElementoSeleccionados[indiceElementoArrastrado] = item;
+        }
+
+    }
+
+    private void ElementoSeleccionado(T item)
+    {
+        if (!ElementoSeleccionados.Any(x => x.Equals(item)))
+        {
+            ElementoSeleccionados.Add(item);
+        }
+
+        sampleItem = default(T);
+
+    }
+}
