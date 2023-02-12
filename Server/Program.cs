@@ -7,21 +7,46 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
+using PeliculaBlazor.Server.Helpers;
 
-namespace PeliculaBlazor.Server
+var builder = WebApplication.CreateBuilder(args);
+
+
+// Add services to the container.
+
+builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
+builder.Services.AddDbContext<ApplicationDbContext>(opciones=> opciones.UseSqlServer("name=DefaultConnection"));
+
+builder.Services.AddTransient<IAlmacenadorArchivos,AlmacenadorArchivosLocal>();
+builder.Services.AddHttpContextAccessor();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            CreateHostBuilder(args).Build().Run();
-        }
-
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    webBuilder.UseStartup<Startup>();
-                });
-    }
+    app.UseWebAssemblyDebugging();
 }
+else
+{
+    app.UseExceptionHandler("/Error");
+    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+    app.UseHsts();
+}
+
+app.UseHttpsRedirection();
+
+app.UseBlazorFrameworkFiles();
+app.UseStaticFiles();
+
+app.UseRouting();
+
+
+app.MapRazorPages();
+app.MapControllers();
+app.MapFallbackToFile("index.html");
+
+app.Run();

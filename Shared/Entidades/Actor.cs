@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -16,6 +17,8 @@ namespace PeliculaBlazor.Shared.Entidades
         public string? Biografia { get; set; }
         public string? Foto { get; set; }
         public DateTime? FechaNacimiento { get; set; }
+        [NotMapped]
+        public string? Personaje { get; set; }
 
         public override bool Equals(object? obj)
         {

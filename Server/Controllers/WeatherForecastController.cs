@@ -1,7 +1,8 @@
+
 using Microsoft.AspNetCore.Mvc;
 using PeliculaBlazor.Shared;
 
-namespace PeliculaBlazor.Server.Controllers
+namespace BlazorPeliculas.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
