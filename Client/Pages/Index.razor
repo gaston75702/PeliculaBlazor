@@ -1,14 +1,16 @@
 ﻿
 @page "/"
+@page "/index"
 @using PeliculaBlazor.Client.Shared
 @inject IRepositorio repositorio
 
     <div>
-        <h3>Pelicula</h3>
-        <ListadoPeliculas  Peliculas="Peliculas"/>
-
-
-
+        <h3>En Cartelera</h3>
+        <ListadoPeliculas  Peliculas="EnCartelera"/>
+    </div>
+    <div>
+        <h3>Proximos Estrenos </h3>
+        <ListadoPeliculas Peliculas="FuturosEstrenos" />
     </div>
     
     <div>
@@ -19,12 +21,15 @@
 @code
 {
 
-    public List<Pelicula> Peliculas;
+    public List<Pelicula>? FuturosEstrenos { get; set; }
+    public List<Pelicula>? EnCartelera { get; set; }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        
-        Peliculas = repositorio.ObtenerPeliculas();
+
+        var respuestaHTTP = await repositorio.Get<HomePageDTO>("api/peliculas");
+        FuturosEstrenos = respuestaHTTP.Response!.ProximosEstrenos;
+        EnCartelera = respuestaHTTP.Response!.PeliculasEnCartelera;
 
     }
 }

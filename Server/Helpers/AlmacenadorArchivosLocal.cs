@@ -30,10 +30,10 @@
             {
                 Directory.CreateDirectory(folder);
             }
-            string rutaGuardada = Path.Combine(folder, nombreArchivo);
-            await File.WriteAllBytesAsync(rutaGuardada, contenido);
+            string rutaGuardado = Path.Combine(folder, nombreArchivo);
+            await File.WriteAllBytesAsync(rutaGuardado, contenido);
 
-            var urlActual = $"{httpContextAccessor!.HttpContext!.Request.Scheme}://{httpContextAccessor.HttpContext.Request.Host}";
+            var urlActual = $"{httpContextAccessor!.HttpContext!.Request.Scheme}://{httpContextAccessor.HttpContext.Request.Host}";  
             var rutaParaBD = Path.Combine(urlActual, nombreContenedor, nombreArchivo)
                 .Replace("\\","/");
             return rutaParaBD;

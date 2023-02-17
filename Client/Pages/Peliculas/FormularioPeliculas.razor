@@ -1,4 +1,5 @@
-﻿
+﻿@inject IRepositorio repositorio
+
 <EditForm Model="Pelicula" OnValidSubmit="OnDataAnnotationsValidated">
     <DataAnnotationsValidator/>
     <div class="mb-3">
@@ -122,11 +123,9 @@
 
     private async Task<IEnumerable<Actor>>BuscarActores(string searchText)
     {
-        return new List<Actor>()
-        {
-            new Actor {Id= 1,Nombre="Antonio Banderas", Foto="https://m.media-amazon.com/images/M/MV5BMTUyOTQ3NTYyNF5BMl5BanBnXkFtZTcwMTY2NjIzNQ@@._V1_QL75_UX140_CR0,2,140,207_.jpg"},
-            new Actor {Id= 2,Nombre="Tom Hanks", Foto="https://media.ambito.com/p/2ec9ef0d79bd91bf88b56935cf95bfd0/adjuntos/239/imagenes/039/449/0039449693/730x0/smart/tom-hanksjpg.jpg"},
-        };
+        var respuestaHTTP = await repositorio.Get<List<Actor>>($"api/actores/buscar/{searchText}");
+        return respuestaHTTP!.Response!;
+
     }
 
     private async Task OnDataAnnotationsValidated()
