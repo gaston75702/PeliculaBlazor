@@ -23,7 +23,7 @@
 
         public async Task<string> GuardarArchivo(byte[] contenido, string extension, string nombreContenedor)
         {
-            var nombreArchivo = $"{Guid.NewGuid()}{extension}";
+            var nombreArchivo = $"{Guid.NewGuid()}.{extension}";
             var folder = Path.Combine(env.WebRootPath, nombreContenedor);
 
             if (!Directory.Exists(folder))
