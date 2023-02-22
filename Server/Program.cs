@@ -23,6 +23,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(opciones=> opciones.UseSqlSe
 builder.Services.AddTransient<IAlmacenadorArchivos,AlmacenadorArchivosLocal>();
 builder.Services.AddHttpContextAccessor();
 
+builder.Services.AddAutoMapper(typeof(Program));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
