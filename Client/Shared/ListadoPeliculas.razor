@@ -1,37 +1,38 @@
 ﻿@inject IJSRuntime js
+@inject SweetAlertService swal
+@inject IRepositorio repositorio
 
-
-<div style="display: flex; flex-wrap: wrap; align-items: center;">
-
+<div style="display: flex; flex-wrap:wrap; align-items: center;">
     <ListadoGenerico Listado="Peliculas">
         <HayRegistros Context="pelicula">
-            <PeliculaIndividual Pelicula="pelicula" EliminarPelicula="@EliminarPelicula" />
+            <PeliculaIndividual Pelicula="pelicula"
+                                EliminarPelicula="EliminarPelicula" @key="pelicula.Id" />
         </HayRegistros>
     </ListadoGenerico>
-
-
 </div>
 
+@code {
+    [Parameter]
+    [EditorRequired]
+    public List<Pelicula>? Peliculas { get; set; }
 
-
-@code
-{
-
-    [Parameter] public List<Pelicula> Peliculas { get; set; }
-
-    bool MostrarBotones = true;
-    async Task EliminarPelicula(Pelicula pelicula)
+    private async Task EliminarPelicula(Pelicula pelicula)
     {
+        var confirmado = await js.Confirm($"¿Desea borrar la película {pelicula.Titulo}?");
 
-        var confirmar = await js.Confirm($"¿Desea borrar la pelicula {pelicula.Titulo}?");
-        if (confirmar)
+        if (confirmado)
         {
-            Peliculas.Remove(pelicula);
-            Console.WriteLine($"Se ha eliminado una pelicula {pelicula.Titulo}");
+            var responseHTTP = await repositorio.Delete($"api/peliculas/{pelicula.Id}");
+
+            if (responseHTTP.Error)
+            {
+                var mensajeError = await responseHTTP.ObtenerMensajeError();
+                await swal.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+            }
+            else
+            {
+                Peliculas!.Remove(pelicula);
+            }
         }
     }
-
-
 }
-
- 

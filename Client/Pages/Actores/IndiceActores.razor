@@ -1,5 +1,7 @@
 ﻿@page "/actores"
 @inject IRepositorio repositorio
+@inject NavigationManager navigationManager
+@inject SweetAlertService swal
 
 <h3>Indice Actores</h3>
 <div class="mb-3">
@@ -7,6 +9,11 @@
     <a href="actores/crear" class="btn btn-info">Crear Actor</a>
 
 </div>
+
+<Paginacion PaginaActual="paginaActual" 
+    PaginasTotales="paginasTotales"
+    PaginaSeleccionada="PaginaSeleccionada">
+</Paginacion>
 
 <ListadoGenerico Listado="Actores">
     <HayRegistrosCompleto>
@@ -23,7 +30,7 @@
                     <tr>
                         <td>
                             <a href="actores/editar/@item.Id" class="btn btn-success">Editar</a>
-                            <button class="btn btn-danger">Borrar</button>
+                            <button class="btn btn-danger" @onclick=@(()=> Borrar(item))>Borrar</button>
                         </td>
                         <td>
                             @item.Nombre
@@ -43,10 +50,48 @@
 @code 
 {
     public List<Actor>? Actores { set; get; }
+    private int paginaActual = 1;
+    private int paginasTotales;
+
 
     protected async override Task OnInitializedAsync()
     {
-        var respuestaHTTP = await repositorio.Get<List<Actor>>("api/actores");
+        await Cargar();
+    }
+
+    private async Task PaginaSeleccionada(int pagina)
+    {
+        paginaActual = pagina;
+        await Cargar(pagina);
+    }
+
+    private async Task Cargar(int pagina = 1)
+    {
+        var respuestaHTTP = await repositorio.Get<List<Actor>>($"api/actores?{pagina}");
         Actores = respuestaHTTP.Response!;
+        paginasTotales = 
+        int.Parse(respuestaHTTP.HttpResponseMessage.Headers.GetValues("totalPaginas").FirstOrDefault()!);
+    }
+
+    private async Task Borrar(Actor actor)
+    {
+        var responseHTTP = await repositorio.Delete($"api/actores/{actor.Id}");
+
+        if (responseHTTP.Error)
+        {
+            if (responseHTTP.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                navigationManager.NavigateTo("actores");
+            }
+            else
+            {
+                var mensajeError = await responseHTTP.ObtenerMensajeError();
+                await swal.FireAsync("Error", mensajeError, SweetAlertIcon.Error);
+            }
+        }
+        else
+        {
+            await Cargar();
+        }
     }
 }

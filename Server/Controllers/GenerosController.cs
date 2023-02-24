@@ -51,6 +51,20 @@ namespace PeliculaBlazor.Server.Controllers
             await context.SaveChangesAsync();
             return NoContent();
         }
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var filasAfectadas = await context.Generos
+                .Where(x => x.Id == id)
+                .ExecuteDeleteAsync();
+
+            if (filasAfectadas == 0)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
 
     }
 }    

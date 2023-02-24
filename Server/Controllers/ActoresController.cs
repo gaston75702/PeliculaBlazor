@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PeliculaBlazor.Server.Helpers;
+using PeliculaBlazor.Shared.DTOs;
 using PeliculaBlazor.Shared.Entidades;
 
 
@@ -24,9 +25,13 @@ namespace PeliculaBlazor.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Actor>>> Get()
+        public async Task<ActionResult<IEnumerable<Actor>>> Get(
+            [FromQuery]PaginacionDTO paginacion)
         {
-            return await context.Actores.ToListAsync();
+            var queryable = context.Actores.AsQueryable();
+            await HttpContext
+                .InsertarParametrosPaginacionEnRespuesta(queryable,paginacion.CantidadRegistros);
+            return await queryable.OrderBy(x => x.Nombre).Paginar(paginacion).ToListAsync();
         }
 
         [HttpGet("buscar/{textoBusqueda}")]
@@ -91,6 +96,18 @@ namespace PeliculaBlazor.Server.Controllers
             await context.SaveChangesAsync();
             return NoContent();
 
+        }
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var actor = await context.Actores.FirstOrDefaultAsync(x => x.Id == id);
+
+            if(actor is null) { return NotFound(); }
+            context.Remove(actor);
+            await context.SaveChangesAsync();
+            await almacenarArchivos.EliminarArchivo(actor.Foto!, contenedor);
+            
+            return NoContent();
         }
     }
 

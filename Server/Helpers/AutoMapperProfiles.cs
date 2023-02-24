@@ -9,6 +9,10 @@ namespace PeliculaBlazor.Server.Helpers
         {
             CreateMap<Actor, Actor>()
                 .ForMember(x => x.Foto, option => option.Ignore());
+            
+            CreateMap<Pelicula, Pelicula>()
+                .ForMember(x => x.Poster, option => option.Ignore());
+
         }
     }
 }
