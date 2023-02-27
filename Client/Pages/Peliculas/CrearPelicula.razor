@@ -2,6 +2,8 @@
 @inject NavigationManager navigationManager
 @inject IRepositorio repositorio
 @inject SweetAlertService swal
+@attribute [Authorize(Roles = "admin")]
+
 
 <h3>Crear Pelicula</h3>
 

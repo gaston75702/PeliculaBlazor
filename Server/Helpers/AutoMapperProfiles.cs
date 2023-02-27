@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using PeliculaBlazor.Shared.DTOs;
 using PeliculaBlazor.Shared.Entidades;
 
 namespace PeliculaBlazor.Server.Helpers
@@ -12,6 +13,8 @@ namespace PeliculaBlazor.Server.Helpers
             
             CreateMap<Pelicula, Pelicula>()
                 .ForMember(x => x.Poster, option => option.Ignore());
+
+            CreateMap<VotoPeliculaDTO, VotoPelicula>();
 
         }
     }

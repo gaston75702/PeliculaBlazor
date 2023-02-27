@@ -153,3 +153,7 @@ a, .btn-link {
     margin:5px;
 
 }
+
+.checked{
+    color: orange;
+}

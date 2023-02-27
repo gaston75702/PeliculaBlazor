@@ -2,10 +2,12 @@
 @inject IRepositorio repositorio
 @inject NavigationManager navigationManager
 @inject SweetAlertService swal
+@attribute [Authorize(Roles ="admin")]
 
-<h3>Indice Generos</h3>
+<h3>Indice Géneros</h3>
+
 <div class="mb-3">
-    <a class="btn btn-info" href="generos/crear">Agregar Generos</a>
+    <a class="btn btn-info" href="generos/crear">Agregar género</a>
 </div>
 
 <ListadoGenerico Listado="Generos">
@@ -18,35 +20,34 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach(var item in Generos!)
+                @foreach (var item in Generos!)
                 {
                     <tr>
                         <td>
-                            <a  href="/generos/editar/@item.Id" class="btn btn-success">Editar</a>
-                            <button class="btn btn-danger" @onclick=@(()=> Borrar(item))>Borrar</button>
+                            <a href="/generos/editar/@item.Id" class="btn btn-success">Editar</a>
+                            <button class="btn btn-danger"
+                                @onclick=@(() => Borrar(item))>
+                                Borrar
+                            </button>
                         </td>
                         <td>
-                            @item.Nombre  
+                            @item.Nombre
                         </td>
-                    </tr>                        
+                    </tr>
                 }
-
             </tbody>
-
-
         </table>
-
     </HayRegistrosCompleto>
-
 </ListadoGenerico>
 
 @code {
-    public List<Genero>? Generos { set; get; }
+    public List<Genero>? Generos { get; set; }
 
     protected async override Task OnInitializedAsync()
     {
         await Cargar();
     }
+
     private async Task Cargar()
     {
         var respuestaHTTP = await repositorio.Get<List<Genero>>("api/generos");

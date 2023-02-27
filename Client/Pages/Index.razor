@@ -4,6 +4,16 @@
 @using PeliculaBlazor.Client.Shared
 @inject IRepositorio repositorio
 
+
+    <AuthorizeView Roles="admin"> 
+        <Authorized>
+            <p>Estas Autenticado,@context.User.Identity?.Name</p>
+        </Authorized>
+        <NotAuthorized>
+            <p>No estas autorizado para ver esto</p>
+        </NotAuthorized>
+    </AuthorizeView>
+
     <div>
         <h3>En Cartelera</h3>
         <ListadoPeliculas  Peliculas="EnCartelera"/>
@@ -13,10 +23,7 @@
         <ListadoPeliculas Peliculas="FuturosEstrenos" />
     </div>
     
-    <div>
-        <h2>Registrar Pelicula</h2>
-        <EjemploTextbox placeholder="Nombre Pelicula" />
-    </div>
+ 
 
 @code
 {
@@ -28,8 +35,17 @@
     {
 
         var respuestaHTTP = await repositorio.Get<HomePageDTO>("api/peliculas");
-        FuturosEstrenos = respuestaHTTP.Response!.ProximosEstrenos;
-        EnCartelera = respuestaHTTP.Response!.PeliculasEnCartelera;
+
+        if (respuestaHTTP.HttpResponseMessage.IsSuccessStatusCode)
+        {
+            FuturosEstrenos = respuestaHTTP.Response!.ProximosEstrenos;
+            EnCartelera = respuestaHTTP.Response!.PeliculasEnCartelera;
+        }
+        else
+        {
+            Console.WriteLine(respuestaHTTP.HttpResponseMessage.StatusCode);
+        }
+
 
     }
 }

@@ -2,6 +2,7 @@
 @inject IRepositorio repositorio
 @inject NavigationManager navigationManager
 @inject SweetAlertService swal
+@attribute [Authorize(Roles = "admin")]
 
 <h3>Editar Película</h3>
 

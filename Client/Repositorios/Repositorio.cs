@@ -80,7 +80,7 @@ namespace PeliculaBlazor.Client.Repositorios
         private async Task<T> DeserializarRespuesta<T>(HttpResponseMessage httpResponse, JsonSerializerOptions jsonSerializerOptions)
         {
             var respuestaString = await httpResponse.Content.ReadAsStringAsync();
-            return JsonSerializer.Deserialize<T>(respuestaString, jsonSerializerOptions);
+            return JsonSerializer.Deserialize<T>(respuestaString, jsonSerializerOptions)!;
         }
          
         public List<Pelicula> ObtenerPeliculas()

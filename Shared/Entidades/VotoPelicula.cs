@@ -13,6 +13,7 @@ namespace PeliculaBlazor.Shared.Entidades
         public DateTime FechaVoto { get; set; }
         public int PeliculaId { get; set; }
         public Pelicula? Pelicula { get; set; }
+        public string UsuarioId { get; set; } = null!;
     }
 
 
