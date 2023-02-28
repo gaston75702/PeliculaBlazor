@@ -3,6 +3,7 @@ using PeliculaBlazor.Shared.Entidades;
 using MathNet.Numerics.Statistics;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using Microsoft.AspNetCore.Components.Authorization;
 
 namespace PeliculaBlazor.Client.Pages
 {
@@ -10,6 +11,10 @@ namespace PeliculaBlazor.Client.Pages
     {
         private int currentCount = 0;
         [Inject] public IJSRuntime js { get; set; } = null!;
+        [CascadingParameter]
+        private Task<AuthenticationState>
+                authenticationStateTask
+        { get; set; } = null!;
 
         public async Task IncrementCount()
         {
@@ -18,9 +23,19 @@ namespace PeliculaBlazor.Client.Pages
             var max = arreglo.Maximum();
             var min = arreglo.Minimum();
 
-            await js.InvokeVoidAsync("alert", $"El max es {max} y el min es {min}");
+            //await js.InvokeVoidAsync("alert", $"El max es {max} y el min es {min}");
 
-            currentCount += 1;
+            var authenticationState = await authenticationStateTask;
+            var usuarioEstaAutenticado = authenticationState.User.Identity!.IsAuthenticated;
+
+            if (usuarioEstaAutenticado)
+            {
+                currentCount += 1;
+            }
+            else
+            {
+                currentCount -= 1;
+            }
         }
     }
 }
