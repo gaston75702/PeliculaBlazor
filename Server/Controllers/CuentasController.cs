@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Tokens;
@@ -12,15 +14,15 @@ namespace PeliculaBlazor.Server.Controllers
 {
     [ApiController]
     [Route("api/cuentas")]
-    public class CuentasController: ControllerBase
+    public class CuentasController : ControllerBase
     {
         private readonly UserManager<IdentityUser> userManager;
         private readonly SignInManager<IdentityUser> signInManager;
         private readonly IConfiguration configuration;
 
         public CuentasController(UserManager<IdentityUser> userManager
-            ,SignInManager<IdentityUser>signInManager
-            ,IConfiguration configuration)
+            , SignInManager<IdentityUser> signInManager
+            , IConfiguration configuration)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
@@ -31,7 +33,7 @@ namespace PeliculaBlazor.Server.Controllers
         public async Task<ActionResult<UserTokenDTO>> CreateUser([FromBody] UserInfo model)
         {
             var usuario = new IdentityUser { UserName = model.Email, Email = model.Email };
-            var resultado = await userManager.CreateAsync(usuario,model.Password);
+            var resultado = await userManager.CreateAsync(usuario, model.Password);
 
             if (resultado.Succeeded)
             {
@@ -44,7 +46,7 @@ namespace PeliculaBlazor.Server.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<ActionResult<UserTokenDTO>>Login([FromBody] UserInfo model)
+        public async Task<ActionResult<UserTokenDTO>> Login([FromBody] UserInfo model)
         {
             var resultado = await signInManager.PasswordSignInAsync(model.Email
                 , model.Password, isPersistent: false, lockoutOnFailure: false);
@@ -59,6 +61,18 @@ namespace PeliculaBlazor.Server.Controllers
             }
         }
 
+        [HttpGet("renovarToken")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<ActionResult<UserTokenDTO>> Renovar()
+        {
+            var userInfo = new UserInfo()
+            {
+                Email = HttpContext.User.Identity!.Name!
+            };
+            return await BuildToken(userInfo);
+
+        }
+        
         private async Task <UserTokenDTO> BuildToken(UserInfo userInfo)
         {
             var claims = new List<Claim>()

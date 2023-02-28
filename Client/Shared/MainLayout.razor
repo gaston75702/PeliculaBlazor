@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+@inject PeliculaBlazor.Client.Auth.RenovadorToken renovadorToken
 
 <div class="page">
     <div class="sidebar">
@@ -16,4 +17,12 @@
         </div>
     </div>
 </div>
+
+@code
+{
+    protected override void OnInitialized()
+    {
+        renovadorToken.Iniciar();
+    }
+}
 
