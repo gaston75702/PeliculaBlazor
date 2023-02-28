@@ -5,15 +5,6 @@
 @inject IRepositorio repositorio
 
 
-    <AuthorizeView Roles="admin"> 
-        <Authorized>
-            <p>Estas Autenticado,@context.User.Identity?.Name</p>
-        </Authorized>
-        <NotAuthorized>
-            <p>No estas autorizado para ver esto</p>
-        </NotAuthorized>
-    </AuthorizeView>
-
     <div>
         <h3>En Cartelera</h3>
         <ListadoPeliculas  Peliculas="EnCartelera"/>

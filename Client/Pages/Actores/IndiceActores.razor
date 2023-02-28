@@ -69,7 +69,7 @@
 
     private async Task Cargar(int pagina = 1)
     {
-        var respuestaHTTP = await repositorio.Get<List<Actor>>($"api/actores?{pagina}");
+        var respuestaHTTP = await repositorio.Get<List<Actor>>($"api/actores?pagina={pagina}");
         Actores = respuestaHTTP.Response!;
         paginasTotales = 
         int.Parse(respuestaHTTP.HttpResponseMessage.Headers.GetValues("totalPaginas").FirstOrDefault()!);
