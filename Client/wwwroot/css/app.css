@@ -15,8 +15,13 @@ h1:focus {
     outline: none;
 }
 
+h3 {
+    color: #D6D6D6;
+}
+
+
 a, .btn-link {
-    color: #0071c1;
+    color: #53A1F3;
 }
 
 .btn-primary {
