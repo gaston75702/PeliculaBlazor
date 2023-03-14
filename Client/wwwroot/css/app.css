@@ -4,19 +4,61 @@ html,body{
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 }
+.loading-spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.loading-spinner {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    position: relative;
+}
+
+    .loading-spinner::after {
+        content: "";
+        display: block;
+        width: 64px;
+        height: 64px;
+        margin: 8px;
+        border-radius: 50%;
+        border: 6px solid #fff;
+        border-color: #fff transparent #fff transparent;
+        animation: loading-spinner 1.2s linear infinite;
+    }
+
+@keyframes loading-spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+
 
 body {
-    background: #283048; /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #859398, #283048); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #859398, #283048); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background-color: #131921;
+    color: white;
 }
+
 
 h1:focus {
     outline: none;
 }
 
+td, th {
+    color: white; /* Cambia el color a tu elección */
+}
+
+
 h3 {
-    color: #D6D6D6;
+    color: white;
 }
 
 

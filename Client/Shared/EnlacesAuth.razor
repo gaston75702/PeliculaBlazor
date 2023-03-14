@@ -1,12 +1,15 @@
 ﻿<AuthorizeView>
     <Authorized>
         <span style="color:#FFFFFF">Hola, @context.User.Identity!.Name!</span>
-        <a href="Logout" class="nav-link btn btn-link">Log out</a>
+
+            <a href="Logout" class="nav-link btn btn-link" style="color: #FFFFFF">Log out</a>
+        
     </Authorized>
     <NotAuthorized>
-        <a href="Registro">Registro</a>
-        <a href="Login" class="nav-link btn btn-link">Login</a>
-
+        <div class="d-flex align-items-center">
+            <a href="Registro" class="nav-link btn btn-link mx-2" style="color: #FFFFFF">Registro</a>
+            <a href="Login" class="nav-link btn btn-link mx-2" style="color: #FFFFFF">Login</a>
+        </div>
     </NotAuthorized>
 
 </AuthorizeView>

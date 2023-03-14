@@ -4,25 +4,45 @@
     flex-direction: column;
 }
 
-/*.navbar {
-    background-color: #006400;
-    color: #fff;*/
-    /* Otros estilos */
-/*}*/
-
-.main {
+main {
     flex: 1;
 }
 
 .sidebar {
-    /*  background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);*/
-    background: #232526; /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #414345, #232526); /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #414345, #232526); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
 }
 
+.navbar-prime, .navbar-prime .nav-link {
+    background-color: #232f3e;
+    color: aliceblue;
+    font-family: sans-serif;
+}
+.navbar {
+    overflow: hidden;
+}
+
+.navbar .nav-link.login {
+    position: absolute;
+    right: 0;
+    margin-right: 20px;
+    
+}
+.nav-link:hover {
+    color: dimgrey;
+}
+.navbar-prime {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+
+
+
+
+
+
 .top-row {
-    background-color: #121415;
+    background-color: #f7f7f7;
     border-bottom: 1px solid #d6d5d5;
     justify-content: flex-end;
     height: 3.5rem;
@@ -30,15 +50,20 @@
     align-items: center;
 }
 
-    .top-row ::deep a, .top-row .btn-link {
+    .top-row ::deep a, .top-row ::deep .btn-link {
         white-space: nowrap;
         margin-left: 1.5rem;
+        text-decoration: none;
     }
 
-    .top-row a:first-child {
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+        .top-row ::deep a:hover, .top-row ::deep .btn-link:hover {
+            text-decoration: underline;
+        }
+
+        .top-row ::deep a:first-child {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
 
 @media (max-width: 640.98px) {
     .top-row:not(.auth) {
@@ -49,7 +74,7 @@
         justify-content: space-between;
     }
 
-    .top-row a, .top-row .btn-link {
+    .top-row ::deep a, .top-row ::deep .btn-link {
         margin-left: 0;
     }
 }
@@ -72,7 +97,13 @@
         z-index: 1;
     }
 
-    .main > div {
+        .top-row.auth ::deep a:first-child {
+            flex: 1;
+            text-align: right;
+            width: 0;
+        }
+
+    .top-row, article {
         padding-left: 2rem !important;
         padding-right: 1.5rem !important;
     }

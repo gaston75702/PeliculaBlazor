@@ -1,35 +1,34 @@
 ﻿@inject IRepositorio repositorio
 
 <EditForm Model="Pelicula" OnValidSubmit="OnDataAnnotationsValidated">
-    <DataAnnotationsValidator/>
+    <DataAnnotationsValidator />
     <div class="mb-3">
-        <label>Titulo:</label>
+        <label class="form-label">Titulo:</label>
         <div>
-            <InputText class="form-control" @bind-Value="@Pelicula.Titulo"/>
-            <ValidationMessage For="@(()=>Pelicula.Titulo)"/>
+            <InputText class="form-control" @bind-Value="@Pelicula.Titulo" />
+            <ValidationMessage For="@(()=>Pelicula.Titulo)" class="invalid-feedback" />
+        </div>
+    </div>
+
+    <div class="mb-3 form-check">
+        <InputCheckbox class="form-check-input" @bind-Value="@Pelicula.EnCartelera" />
+        <label class="form-check-label">En cartelera:</label>
+        <ValidationMessage For="@(()=>Pelicula.EnCartelera)" class="invalid-feedback" />
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Trailer:</label>
+        <div>
+            <InputText class="form-control" @bind-Value="@Pelicula.Trailer" />
+            <ValidationMessage For="@(()=>Pelicula.Trailer)" class="invalid-feedback" />
         </div>
     </div>
 
     <div class="mb-3">
-        <label>En cartelera:</label>
-        <div>
-            <InputCheckbox @bind-Value="@Pelicula.EnCartelera" />
-            <ValidationMessage For="@(()=>Pelicula.EnCartelera)" />
-        </div>
-    </div>
-    <div class="mb-3">
-        <label>Trailer:</label>
-        <div>
-            <InputText class="form-control" @bind-Value="@Pelicula.Trailer" />
-            <ValidationMessage For="@(()=>Pelicula.Trailer)" />
-        </div>
-    </div>
-    
-    <div class="mb-3">
-        <label>Lanzamineto:</label>
+        <label class="form-label">Lanzamiento:</label>
         <div>
             <InputDate class="form-control" @bind-Value="@Pelicula.Lanzamiento" />
-            <ValidationMessage For="@(()=>Pelicula.Lanzamiento)" />
+            <ValidationMessage For="@(()=>Pelicula.Lanzamiento)" class="invalid-feedback" />
         </div>
     </div>
 
@@ -38,43 +37,39 @@
     </div>
 
     <div class="mb-3 form-markdown">
-        <InputMarkdown @bind-Value="Pelicula.Resumen" 
-        For=@(() =>Pelicula.Resumen) 
-            Label="Resumen"/>
+        <InputMarkdown @bind-Value="Pelicula.Resumen"
+                       For=@(() =>Pelicula.Resumen)
+                       Label="Resumen" />
     </div>
 
     <div class="mb-3">
-        <label>Generos:</label>
+        <label class="form-label">Generos:</label>
         <div>
             <SelectorMultiple NoSeleccionados="NoSeleccionados" Seleccionados="Seleccionados">
-                 
+
             </SelectorMultiple>
         </div>
     </div>
 
     <div class="mb-3">
-        <label>Actores:</label>
+        <label class="form-label">Actores:</label>
         <div>
             <SelectorMultipleTypeahead Context="Actor" SearchMethod="BuscarActores"
-                ElementoSeleccionados="ActoresSeleccionados">
+                                       ElementoSeleccionados="ActoresSeleccionados">
                 <MyListTemplate>
-                    @Actor.Nombre / <input type="text" placeholder="Personaje" @bind ="Actor.Personaje" />
+                    @Actor.Nombre / <input type="text" placeholder="Personaje" @bind="Actor.Personaje" class="form-control" />
                 </MyListTemplate>
                 <MyResultTemplate>
-                    <img style="width:50px" src="@Actor.Foto"/>
-                    @Actor.Nombre
+                    <img style="width:50px" src="@Actor.Foto" />
+                    <span style="color:black">@Actor.Nombre</span>
                 </MyResultTemplate>
-
             </SelectorMultipleTypeahead>
         </div>
     </div>
 
-     <button class="btn btn-success">Guardar Cambios</button>
-
+    <button class="btn btn-primary">Guardar Cambios</button>
 
 </EditForm>
-    
-
 
 
 

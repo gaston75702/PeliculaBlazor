@@ -7,20 +7,21 @@
     <title>PeliculaBlazor</title>
     <base href="/" />
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css" integrity="sha512-cO+JeKxNMyT20aBN8pJ1hKjGg9XlLdHsQsCJY6+jwgdzPIB02yKQ2yMfMF6hzB+d6X/cUZIuUeAhYUgeJnDlmw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link href="css/app.css" rel="stylesheet" />
     <link rel="icon" type="image/png" href="favicon.png" />
     <link href="PeliculaBlazor.Client.styles.css" rel="stylesheet" />
     <link href="_content/Blazored.Typeahead/blazored-typeahead.css" rel="stylesheet" />
+
 </head>
 
-<body >
+<body>
     <div id="app">
-        <svg class="loading-progress">
-            <circle r="40%" cx="50%" cy="50%" />
-            <circle r="40%" cx="50%" cy="50%" />
-        </svg>
-        <div class="loading-progress-text"></div>
+        <div class="loading-spinner-container">
+            <div class="loading-spinner"></div>
+        </div>
     </div>
 
     <div id="blazor-error-ui">
@@ -31,6 +32,7 @@
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="js/Utilidades.js"></script>
     <script src="_content/CurrieTechnologies.Razor.SweetAlert2/sweetAlert2.min.js"></script>
+ 
     <script src="_content/Blazored.Typeahead/blazored-typeahead.js"></script>
 
 
